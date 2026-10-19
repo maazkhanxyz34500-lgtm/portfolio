@@ -1,73 +1,245 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaz Khan - Portfolio</title>
+    <title>Maaz Khan | Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        h1 { color: #38bdf8; margin-bottom: 5px; }
-        h2 { color: #f43f5e; border-bottom: 2px solid #334155; padding-bottom: 8px; margin-top: 30px; }
-        .subtitle { color: #94a3b8; font-size: 1.1em; margin-bottom: 20px; }
-        .badge { background: #0284c7; color: white; padding: 4px 10px; border-radius: 6px; font-size: 0.85em; display: inline-block; margin: 3px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-        .card { background: #334155; padding: 15px; border-radius: 8px; }
-        a { color: #38bdf8; text-decoration: none; }
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --accent-color: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --border-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 15px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent-gradient);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .location {
+            color: #e5e7eb;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin: 35px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .badge:hover {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Maaz Khan</h1>
-        <p class="subtitle">Bioinformatics Student | AI Content Creator & Animator | IT Specialist</p>
-        <p>📍 Peshawar, Pakistan | 📧 <a href="mailto:maazkhanxyz34500@gmail.com">maazkhanxyz34500@gmail.com</a></p>
+        <header>
+            <h1>Maaz Khan</h1>
+            <p class="subtitle">Bioinformatics Student | AI Content Creator & Animator | IT Specialist</p>
+            <p class="location"><i class="fa-solid fa-location-dot" style="color: #f43f5e;"></i> Peshawar, Pakistan</p>
+            
+            <div class="btn-container">
+                <a href="mailto:maazkhanxyz34500@gmail.com" class="btn btn-primary">
+                    <i class="fa-solid fa-envelope"></i> Contact Email
+                </a>
+            </div>
+        </header>
 
-        <h2>About Me</h2>
-        <p>I am a Bioinformatics student at Islamia College Peshawar with a strong background in Computer Science & Information Technology. I specialize in combining biological data analysis with modern AI technologies, computer troubleshooting, animation, and digital marketing.</p>
-
-        <h2>Education & Diplomas</h2>
-        <div class="card" style="margin-bottom: 10px;">
-            <strong>BS Bioinformatics</strong> — Islamia College Peshawar (2025 - Present)
-        </div>
-        <div class="card" style="margin-bottom: 10px;">
-            <strong>DIT (Diploma in Information Technology)</strong> — Board of Technical Education (2024)
-        </div>
-        <div class="card" style="margin-bottom: 10px;">
-            <strong>FSc Computer Science</strong> — Islamia College Peshawar (2023 - 2025)
-        </div>
-        <div class="card" style="margin-bottom: 10px;">
-            <strong>Matriculation in Sciences</strong> — University Public School Peshawar (2021 - 2023)
+        <h2 class="section-title"><i class="fa-solid fa-user"></i> About Me</h2>
+        <div class="card">
+            <p>I am a Bioinformatics student at Islamia College Peshawar with a strong background in Computer Science & Information Technology. I specialize in combining biological data analysis with modern AI technologies, computer troubleshooting, animation, and digital marketing.</p>
         </div>
 
-        <h2>Skills & Expertise</h2>
-        <p>
-            <span class="badge">DIT & Computer Troubleshooting</span>
-            <span class="badge">Hardware & Software Fixes</span>
-            <span class="badge">Python Programming</span>
-            <span class="badge">MS Office Suite</span>
-            <span class="badge">Video Editing</span>
-            <span class="badge">AI Video & Product Ads</span>
-            <span class="badge">AI Anime & Storyboarding</span>
-            <span class="badge">Logo & Thumbnail Design</span>
-            <span class="badge">AI Prompt Engineering</span>
-            <span class="badge">Professional CV Creation</span>
-        </p>
+        <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education & Diplomas</h2>
+        <div class="card">
+            <h3 style="color: #f3f4f6;">BS Bioinformatics</h3>
+            <p style="color: var(--text-sub);">Islamia College Peshawar (2025 - Present)</p>
+        </div>
+        <div class="card">
+            <h3 style="color: #f3f4f6;">DIT (Diploma in Information Technology)</h3>
+            <p style="color: var(--text-sub);">Board of Technical Education (2024)</p>
+        </div>
+        <div class="card">
+            <h3 style="color: #f3f4f6;">FSc Computer Science</h3>
+            <p style="color: var(--text-sub);">Islamia College Peshawar (2023 - 2025)</p>
+        </div>
+        <div class="card">
+            <h3 style="color: #f3f4f6;">Matriculation in Sciences</h3>
+            <p style="color: var(--text-sub);">University Public School Peshawar (2021 - 2023)</p>
+        </div>
 
-        <h2>Ongoing Projects</h2>
-        <div class="grid">
+        <h2 class="section-title"><i class="fa-solid fa-gears"></i> Skills & Expertise</h2>
+        <div class="card">
+            <div class="badge-list">
+                <span class="badge">DIT & Computer Troubleshooting</span>
+                <span class="badge">Hardware & Software Maintenance</span>
+                <span class="badge">Python Programming</span>
+                <span class="badge">MS Office Suite</span>
+                <span class="badge">Video Editing</span>
+                <span class="badge">AI Video & Product Ads</span>
+                <span class="badge">AI Anime & Storyboarding</span>
+                <span class="badge">Logo & Thumbnail Design</span>
+                <span class="badge">AI Prompt Engineering</span>
+                <span class="badge">Professional CV Creation</span>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fa-solid fa-film"></i> Featured Projects</h2>
+        <div class="grid-2">
             <div class="card">
-                <h3>🎬 Mischief Mechanic</h3>
-                <p>An original AI-generated anime/cartoon series focusing on creative storytelling and visual consistency.</p>
+                <h3 style="color: #38bdf8; margin-bottom: 8px;">🎬 Mischief Mechanic</h3>
+                <p style="color: var(--text-sub); font-size: 0.95rem;">An original AI-generated anime/cartoon series focusing on creative storytelling, character design, and visual consistency.</p>
             </div>
             <div class="card">
-                <h3>🐉 Miramon Anime</h3>
-                <p>Stylized AI anime series showcasing advanced prompt engineering and animation workflows.</p>
+                <h3 style="color: #38bdf8; margin-bottom: 8px;">🐉 Miramon Anime</h3>
+                <p style="color: var(--text-sub); font-size: 0.95rem;">Stylized AI anime series showcasing advanced prompt engineering, custom animation workflows, and high-quality visual effects.</p>
             </div>
         </div>
 
-        <h2>Contact</h2>
-        <p>For business promotions, logo/thumbnail design, or IT services, feel free to reach out via email: <strong>maazkhanxyz34500@gmail.com</strong></p>
+        <footer>
+            <p>© 2026 Maaz Khan. All rights reserved.</p>
+        </footer>
     </div>
+
 </body>
 </html>
