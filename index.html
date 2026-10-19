@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaz Khan | Portfolio</title>
+    <title>Maaz Khan | Professional AI Animator & Bioinformatician</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --accent-color: #38bdf8;
-            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            --text-main: #f3f4f6;
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.8);
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            --text-main: #f9fafb;
             --text-sub: #9ca3af;
-            --border-color: #1f2937;
+            --border-glow: rgba(56, 189, 248, 0.25);
         }
 
         * {
@@ -27,24 +30,38 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 20px 15px;
+            padding: 25px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
-            max-width: 850px;
+            max-width: 980px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 25px;
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            margin-bottom: 35px;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
         }
 
         header::before {
@@ -58,30 +75,33 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
         }
 
         .subtitle {
-            color: var(--text-sub);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .location {
-            color: #e5e7eb;
+            color: var(--text-sub);
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
@@ -90,52 +110,122 @@
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-primary {
             background: var(--accent-gradient);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
         }
 
         .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.6);
+        }
+
+        .btn-yt {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .btn-yt:hover {
+            background: #cc0000;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn-fb {
+            background: #1877f2;
+            color: #fff;
+        }
+
+        .btn-fb:hover {
+            background: #166fe5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
         }
 
         .section-title {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            margin: 35px 0 15px 0;
+            font-size: 1.7rem;
+            color: var(--accent-cyan);
+            margin: 45px 0 20px 0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
         }
 
-        .card {
+        .tilt-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 14px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-glow);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            transform-style: preserve-3d;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        .tilt-card:hover {
+            border-color: rgba(6, 182, 212, 0.7);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.25);
         }
 
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 22px;
+        }
+
+        .visual-banner {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+            color: var(--accent-cyan);
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .char-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            margin-right: 5px;
+        }
+
+        .cert-tag {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-top: 8px;
         }
 
         .badge-list {
@@ -145,101 +235,227 @@
         }
 
         .badge {
-            background: #1e293b;
+            background: #0f172a;
             color: #38bdf8;
-            border: 1px solid #334155;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            border: 1px solid #1e293b;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
             font-weight: 500;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .badge:hover {
-            background: var(--accent-color);
-            color: #000;
+            background: var(--accent-cyan);
+            color: #030712;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
         }
 
         footer {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 25px;
             color: var(--text-sub);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-glow);
         }
     </style>
 </head>
 <body>
 
+    <canvas id="canvas-bg"></canvas>
+
     <div class="container">
-        <header>
+        <!-- Header Section -->
+        <header data-tilt data-tilt-max="4">
             <h1>Maaz Khan</h1>
             <p class="subtitle">Bioinformatics Student | AI Content Creator & Animator | IT Specialist</p>
             <p class="location"><i class="fa-solid fa-location-dot" style="color: #f43f5e;"></i> Peshawar, Pakistan</p>
             
             <div class="btn-container">
                 <a href="mailto:maazkhanxyz34500@gmail.com" class="btn btn-primary">
-                    <i class="fa-solid fa-envelope"></i> Contact Email
+                    <i class="fa-solid fa-paper-plane"></i> Get In Touch
                 </a>
             </div>
         </header>
 
-        <h2 class="section-title"><i class="fa-solid fa-user"></i> About Me</h2>
-        <div class="card">
-            <p>I am a Bioinformatics student at Islamia College Peshawar with a strong background in Computer Science & Information Technology. I specialize in combining biological data analysis with modern AI technologies, computer troubleshooting, animation, and digital marketing.</p>
+        <!-- About Me Section -->
+        <h2 class="section-title"><i class="fa-solid fa-user-astronaut"></i> About Me</h2>
+        <div class="tilt-card" data-tilt data-tilt-max="4" data-tilt-speed="400">
+            <p>I am a Bioinformatics student at Islamia College Peshawar, bridging biological data science with modern AI creativity. I specialize in end-to-end 3D AI anime production, character design, storytelling, and complex technical troubleshooting.</p>
         </div>
 
+        <!-- Featured Projects Section -->
+        <h2 class="section-title"><i class="fa-solid fa-film"></i> Featured 3D AI Anime Projects</h2>
+        <div class="grid-2">
+            <!-- Mischief Mechanic -->
+            <div class="tilt-card" data-tilt data-tilt-max="8" data-tilt-speed="400">
+                <div class="visual-banner">
+                    <i class="fa-solid fa-dragon"></i>
+                </div>
+                <h3 style="color: #38bdf8; margin-bottom: 8px;"><i class="fa-solid fa-clapperboard"></i> Mischief Mechanic</h3>
+                <p style="color: var(--text-sub); font-size: 0.92rem; margin-bottom: 10px;">An original 3D-style AI animated series featuring dynamic character pranks and comedy (Maaz TV).</p>
+                <div>
+                    <span class="char-tag">PiP (Blue Hero)</span>
+                    <span class="char-tag">Bumble (Orange Buddy)</span>
+                    <span class="char-tag">3D Animations</span>
+                </div>
+                <div class="project-actions">
+                    <a href="https://youtu.be/NRkuPq-WsVM" target="_blank" class="btn btn-yt">
+                        <i class="fa-brands fa-youtube"></i> YouTube
+                    </a>
+                    <a href="https://www.facebook.com/share/v/1Dp2MUa6xo/" target="_blank" class="btn btn-fb">
+                        <i class="fa-brands fa-facebook"></i> Video
+                    </a>
+                    <a href="https://www.facebook.com/share/v/19pCW3zdyQ/" target="_blank" class="btn btn-fb">
+                        <i class="fa-solid fa-play"></i> Clip
+                    </a>
+                </div>
+            </div>
+
+            <!-- Miramon -->
+            <div class="tilt-card" data-tilt data-tilt-max="8" data-tilt-speed="400">
+                <div class="visual-banner" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); color: #a855f7;">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <h3 style="color: #a855f7; margin-bottom: 8px;"><i class="fa-solid fa-robot"></i> Miramon (Hindi Series)</h3>
+                <p style="color: var(--text-sub); font-size: 0.92rem; margin-bottom: 10px;">A story-driven anime series with complete Hindi voiceovers, featuring student life and sci-fi tech (AI Urdu Studio).</p>
+                <div>
+                    <span class="char-tag">Haruto</span>
+                    <span class="char-tag">Miramon Bot</span>
+                    <span class="char-tag">Hindi Dubbed</span>
+                </div>
+                <div class="project-actions">
+                    <a href="https://youtube.com/shorts/jBSZiWBYJO8" target="_blank" class="btn btn-yt">
+                        <i class="fa-brands fa-youtube"></i> Short
+                    </a>
+                    <a href="https://www.facebook.com/share/r/1JqkEG2WYy/" target="_blank" class="btn btn-fb">
+                        <i class="fa-brands fa-facebook"></i> Reel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Certifications Section -->
+        <h2 class="section-title"><i class="fa-solid fa-award"></i> Professional Certifications</h2>
+        <div class="grid-2">
+            <div class="tilt-card" data-tilt data-tilt-max="6">
+                <h3 style="color: #10b981; margin-bottom: 5px;"><i class="fa-solid fa-certificate"></i> Personal Branding for Career Success</h3>
+                <p style="color: #e2e8f0; font-weight: 600; font-size: 0.9rem;">Deloitte WorldClass</p>
+                <p style="color: var(--text-sub); font-size: 0.85rem; margin-top: 4px;">Completed: 07/09/2026</p>
+                <span class="cert-tag">Verified Certificate</span>
+            </div>
+
+            <div class="tilt-card" data-tilt data-tilt-max="6">
+                <h3 style="color: #10b981; margin-bottom: 5px;"><i class="fa-solid fa-certificate"></i> Effective Leadership</h3>
+                <p style="color: #e2e8f0; font-weight: 600; font-size: 0.9rem;">Deloitte WorldClass</p>
+                <p style="color: var(--text-sub); font-size: 0.85rem; margin-top: 4px;">Completed: 07/09/2026</p>
+                <span class="cert-tag">Verified Certificate</span>
+            </div>
+        </div>
+
+        <!-- Education & Credentials Section -->
         <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education & Diplomas</h2>
-        <div class="card">
+        <div class="tilt-card" data-tilt data-tilt-max="4">
             <h3 style="color: #f3f4f6;">BS Bioinformatics</h3>
             <p style="color: var(--text-sub);">Islamia College Peshawar (2025 - Present)</p>
         </div>
-        <div class="card">
+        <div class="tilt-card" data-tilt data-tilt-max="4">
             <h3 style="color: #f3f4f6;">DIT (Diploma in Information Technology)</h3>
             <p style="color: var(--text-sub);">Board of Technical Education (2024)</p>
         </div>
-        <div class="card">
+        <div class="tilt-card" data-tilt data-tilt-max="4">
             <h3 style="color: #f3f4f6;">FSc Computer Science</h3>
             <p style="color: var(--text-sub);">Islamia College Peshawar (2023 - 2025)</p>
         </div>
-        <div class="card">
-            <h3 style="color: #f3f4f6;">Matriculation in Sciences</h3>
-            <p style="color: var(--text-sub);">University Public School Peshawar (2021 - 2023)</p>
-        </div>
 
-        <h2 class="section-title"><i class="fa-solid fa-gears"></i> Skills & Expertise</h2>
-        <div class="card">
+        <!-- Enhanced Skills & Expertise Section -->
+        <h2 class="section-title"><i class="fa-solid fa-brain"></i> Skills & Expertise</h2>
+        <div class="tilt-card" data-tilt data-tilt-max="3">
             <div class="badge-list">
-                <span class="badge">DIT & Computer Troubleshooting</span>
-                <span class="badge">Hardware & Software Maintenance</span>
-                <span class="badge">Python Programming</span>
-                <span class="badge">MS Office Suite</span>
-                <span class="badge">Video Editing</span>
-                <span class="badge">AI Video & Product Ads</span>
-                <span class="badge">AI Anime & Storyboarding</span>
-                <span class="badge">Logo & Thumbnail Design</span>
                 <span class="badge">AI Prompt Engineering</span>
-                <span class="badge">Professional CV Creation</span>
-            </div>
-        </div>
-
-        <h2 class="section-title"><i class="fa-solid fa-film"></i> Featured Projects</h2>
-        <div class="grid-2">
-            <div class="card">
-                <h3 style="color: #38bdf8; margin-bottom: 8px;">🎬 Mischief Mechanic</h3>
-                <p style="color: var(--text-sub); font-size: 0.95rem;">An original AI-generated anime/cartoon series focusing on creative storytelling, character design, and visual consistency.</p>
-            </div>
-            <div class="card">
-                <h3 style="color: #38bdf8; margin-bottom: 8px;">🐉 Miramon Anime</h3>
-                <p style="color: var(--text-sub); font-size: 0.95rem;">Stylized AI anime series showcasing advanced prompt engineering, custom animation workflows, and high-quality visual effects.</p>
+                <span class="badge">3D Character Design</span>
+                <span class="badge">AI Anime Storyboarding</span>
+                <span class="badge">Personal Branding</span>
+                <span class="badge">Effective Leadership</span>
+                <span class="badge">DIT & Computer Hardware</span>
+                <span class="badge">Python Programming</span>
+                <span class="badge">Voice Dubbing & Video Editing</span>
+                <span class="badge">IT Troubleshooting</span>
             </div>
         </div>
 
         <footer>
-            <p>© 2026 Maaz Khan. All rights reserved.</p>
+            <p>© 2026 Maaz Khan. Created with Advanced 3D AI UI.</p>
         </footer>
     </div>
 
+    <script>
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 8,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.12
+        });
+
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.color = 'rgba(56, 189, 248, ' + (Math.random() * 0.5 + 0.2) + ')';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 75; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
 </body>
 </html>
